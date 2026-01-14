@@ -1,9 +1,15 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
+import PurchaseModal from "@/components/PurchaseModal";
 
 const CTASection = () => {
-  const scrollToProducts = () => {
-    document.getElementById("produtos")?.scrollIntoView({ behavior: "smooth" });
+  const [showModal, setShowModal] = useState(false);
+
+  const mentoriaProduct = {
+    name: "Mentoria Premium",
+    price: "997",
+    originalPrice: "1.997",
   };
 
   return (
@@ -16,7 +22,7 @@ const CTASection = () => {
 
       <div className="container relative">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm mb-8 animate-pulse">
             <Sparkles className="w-4 h-4 text-primary" />
             <span className="text-muted-foreground">Vagas limitadas para mentoria</span>
           </div>
@@ -32,7 +38,7 @@ const CTASection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="hero" size="xl" onClick={scrollToProducts}>
+            <Button variant="hero" size="xl" onClick={() => setShowModal(true)}>
               Quero Começar Agora
               <ArrowRight className="w-5 h-5" />
             </Button>
@@ -43,6 +49,12 @@ const CTASection = () => {
           </p>
         </div>
       </div>
+
+      <PurchaseModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        product={mentoriaProduct}
+      />
     </section>
   );
 };

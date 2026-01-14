@@ -1,7 +1,15 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Check, Star, Zap, Crown } from "lucide-react";
+import PurchaseModal from "@/components/PurchaseModal";
 
 const ProductsSection = () => {
+  const [selectedProduct, setSelectedProduct] = useState<{
+    name: string;
+    price: string;
+    originalPrice: string;
+  } | null>(null);
+
   const products = [
     {
       name: "E-book Starter",
@@ -55,6 +63,14 @@ const ProductsSection = () => {
     },
   ];
 
+  const handlePurchase = (product: typeof products[0]) => {
+    setSelectedProduct({
+      name: product.name,
+      price: product.price,
+      originalPrice: product.originalPrice,
+    });
+  };
+
   return (
     <section id="produtos" className="py-20 md:py-32 bg-card relative overflow-hidden">
       {/* Background glow */}
@@ -77,9 +93,9 @@ const ProductsSection = () => {
               key={index}
               className={`relative rounded-2xl p-8 ${
                 product.popular
-                  ? "bg-gradient-to-b from-primary/20 to-card border-2 border-primary glow-primary"
-                  : "bg-gradient-card border border-border/50"
-              } card-hover`}
+                  ? "bg-gradient-to-b from-primary/20 to-card border-2 border-primary shadow-[0_0_40px_hsl(142_71%_45%/0.3)]"
+                  : "bg-gradient-to-b from-secondary/50 to-card border border-border/50"
+              } transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_40px_hsl(142_71%_45%/0.3)]`}
             >
               {product.popular && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary text-primary-foreground text-sm font-semibold rounded-full">
@@ -116,6 +132,7 @@ const ProductsSection = () => {
                 variant={product.popular ? "hero" : "outline"}
                 className="w-full"
                 size="lg"
+                onClick={() => handlePurchase(product)}
               >
                 {product.cta}
               </Button>
@@ -123,6 +140,12 @@ const ProductsSection = () => {
           ))}
         </div>
       </div>
+
+      <PurchaseModal
+        isOpen={!!selectedProduct}
+        onClose={() => setSelectedProduct(null)}
+        product={selectedProduct}
+      />
     </section>
   );
 };

@@ -17,6 +17,10 @@ const ProblemSolutionSection = () => {
     "Funciona em poucas horas por dia",
   ];
 
+  const scrollToProducts = () => {
+    document.getElementById("produtos")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section id="problema" className="py-20 md:py-32 bg-background relative">
       <div className="container">
@@ -35,7 +39,7 @@ const ProblemSolutionSection = () => {
 
             <ul className="space-y-4">
               {problems.map((problem, index) => (
-                <li key={index} className="flex items-start gap-3 p-4 rounded-lg bg-destructive/5 border border-destructive/20">
+                <li key={index} className="flex items-start gap-3 p-4 rounded-lg bg-destructive/5 border border-destructive/20 hover:bg-destructive/10 transition-colors cursor-default">
                   <XCircle className="w-5 h-5 text-destructive mt-0.5 shrink-0" />
                   <span className="text-foreground/90">{problem}</span>
                 </li>
@@ -57,17 +61,20 @@ const ProblemSolutionSection = () => {
 
             <ul className="space-y-4">
               {solutions.map((solution, index) => (
-                <li key={index} className="flex items-start gap-3 p-4 rounded-lg bg-primary/5 border border-primary/20 card-hover">
+                <li key={index} className="flex items-start gap-3 p-4 rounded-lg bg-primary/5 border border-primary/20 hover:bg-primary/10 hover:-translate-x-1 transition-all cursor-default">
                   <CheckCircle className="w-5 h-5 text-primary mt-0.5 shrink-0" />
                   <span className="text-foreground/90">{solution}</span>
                 </li>
               ))}
             </ul>
 
-            <div className="flex items-center gap-2 text-primary font-semibold cursor-pointer hover:gap-4 transition-all">
+            <button 
+              onClick={scrollToProducts}
+              className="flex items-center gap-2 text-primary font-semibold cursor-pointer hover:gap-4 transition-all group"
+            >
               <span>Descubra como funciona</span>
-              <ArrowRight className="w-4 h-4" />
-            </div>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
           </div>
         </div>
       </div>
